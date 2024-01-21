@@ -1,0 +1,7 @@
+# Directories
+.vs/
+Ghost/Game/
+x64/
+
+# Files
+*.user
