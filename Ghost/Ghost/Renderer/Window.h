@@ -16,15 +16,17 @@ namespace Ghost
 		void Init();
 		void DeInit(int error);
 		void WindowUpdate(Camera* camera);
-		void AddTexture(Texture& texture);
+		void AddTexture(std::shared_ptr<Texture>& texture);
 		SDL_Renderer* const GetRender() { return m_Render; }
+		int GetWidth() { return m_Width; }
+		int GetHeight() { return m_Height; }
 	private:
 		SDL_Window* m_Window = NULL;
 		SDL_Renderer* m_Render = NULL;
 		std::string m_Title = "GhostEngine";
-		int m_Width = 1280;
-		int m_Height = 720;
-		std::vector<Texture> m_Textures;
+		int m_Width = 1920;
+		int m_Height = 1080;
+		std::vector<std::shared_ptr<Texture>> m_Textures;
 	};
 }
 

@@ -4,13 +4,13 @@ namespace Ghost
 {
 	Texture::Texture()
 	{
-		m_DestinationRect = { 0,0,0,0 };
-		m_SreenRect = { 0,0,0,0 };
 	}
 
 	Texture::~Texture()
 	{
 		SDL_DestroyTexture(m_Texture);
+		delete m_SreenRect;
+		delete m_DestinationRect;
 	}
 
 	bool Texture::TryLoadTexture(const char* path, SDL_Renderer* render, SDL_Point destination)
@@ -23,8 +23,16 @@ namespace Ghost
 			return false;
 		}
 
-		m_DestinationRect = {destination.x, destination.y, surface->w, surface->h };
+		m_DestinationRect = new SDL_Rect{destination.x, destination.y, surface->w, surface->h };
 		m_Texture = SDL_CreateTextureFromSurface(render, surface);
 		SDL_FreeSurface(surface);
+	}
+
+	void Texture::SetScreenRect(SDL_Rect screenRect)
+	{
+		if (m_SreenRect == NULL)
+			m_SreenRect = new SDL_Rect({ 0,0,0,0 });
+
+		*m_SreenRect = screenRect;
 	}
 }

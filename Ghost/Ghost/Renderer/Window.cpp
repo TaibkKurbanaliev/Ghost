@@ -77,16 +77,16 @@ namespace Ghost
 
 		for (auto currentTexture = begin(m_Textures); currentTexture < end(m_Textures); ++currentTexture)
 		{
-			if (&camera != NULL)
-				SDL_RenderCopy(m_Render, currentTexture->GetTexture(), camera->GetProperties(), currentTexture->GetDestinationRect());
+			if (camera != NULL)
+				SDL_RenderCopyEx(m_Render, (*currentTexture)->GetTexture(), camera->GetProperties(), (*currentTexture)->GetDestinationRect(), 0, NULL, SDL_FLIP_NONE);
 			else 
-				SDL_RenderCopy(m_Render, currentTexture->GetTexture(), NULL, currentTexture->GetDestinationRect());
+				SDL_RenderCopyEx(m_Render, (*currentTexture)->GetTexture(), (*currentTexture)->GetScreenRect(), (*currentTexture)->GetDestinationRect(), 0, NULL, SDL_FLIP_NONE);
 		}
 
 		SDL_RenderPresent(m_Render);
 	}
 
-	void Window::AddTexture(Texture& texture)
+	void Window::AddTexture(std::shared_ptr<Texture>& texture)
 	{
 		if (&texture == NULL)
 		{

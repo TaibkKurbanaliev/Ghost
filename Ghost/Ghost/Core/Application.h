@@ -3,6 +3,9 @@
 #include "../MainIncludes.h"
 #include "Log.h"
 #include "../Renderer/Window.h"
+#include "Time.h"
+#include "Input.h"
+#include "../Renderer/Animation.h"
 
 namespace Ghost
 {

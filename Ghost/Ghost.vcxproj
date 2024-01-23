@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ghost\Renderer\Animation.cpp" />
     <ClCompile Include="Ghost\Renderer\Camera.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Ghost\Core\Application.cpp" />
@@ -146,8 +147,10 @@
     <ClCompile Include="Ghost\Core\Log.cpp" />
     <ClCompile Include="Ghost\Renderer\Texture.cpp" />
     <ClCompile Include="Ghost\Core\Input.cpp" />
+    <ClCompile Include="Ghost\Core\Time.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ghost\Renderer\Animation.h" />
     <ClInclude Include="Ghost\Renderer\Camera.h" />
     <ClInclude Include="Ghost\Core\Application.h" />
     <ClInclude Include="Ghost\Core\Ghost.h" />
@@ -156,6 +159,7 @@
     <ClInclude Include="Ghost\Core\Log.h" />
     <ClInclude Include="Ghost\Renderer\Texture.h" />
     <ClInclude Include="Ghost\Core\Input.h" />
+    <ClInclude Include="Ghost\Core\Time.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

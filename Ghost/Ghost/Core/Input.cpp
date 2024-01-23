@@ -18,7 +18,7 @@ namespace Ghost
 
 	void Input::SetVertical(int direction)
 	{
-		if (direction > VERTICAL_AXIS_UP || direction < VERTICAL_AXIS_DOWN)
+		if (direction < VERTICAL_AXIS_UP || direction > VERTICAL_AXIS_DOWN)
 		{
 			GHOST_CORE_WARN("Value must be in range (-1,1) but was: value - {}", direction);
 			return;

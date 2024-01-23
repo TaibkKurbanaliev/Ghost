@@ -19,5 +19,5 @@ namespace Ghost
 
 #define HORIZONTAL_AXIS_RIGHT 1
 #define HORIZONTAL_AXIS_LEFT -1
-#define VERTICAL_AXIS_UP 1
-#define VERTICAL_AXIS_DOWN -1
+#define VERTICAL_AXIS_UP -1
+#define VERTICAL_AXIS_DOWN 1
