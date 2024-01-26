@@ -35,4 +35,9 @@ namespace Ghost
 
 		*m_SreenRect = screenRect;
 	}
+
+	void Texture::SetDestinationRect(SDL_Rect destRect)
+	{
+		*m_DestinationRect = destRect;
+	}
 }

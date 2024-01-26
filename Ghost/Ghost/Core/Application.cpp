@@ -10,6 +10,7 @@ namespace Ghost
 	{
 
 	}
+
 	void Applictation::Run()
 	{
 		Log::Init();
@@ -27,8 +28,14 @@ namespace Ghost
 
 		Animation* anim = new Animation(*texture2, { 48,48 }, { 0,48 }, 4);
 
-		m_Window->AddTexture(texture);
-		m_Window->AddTexture(*(anim->GetTexture()));
+		std::shared_ptr<GameObject> player = std::make_shared<GameObject>();
+		player->SetAnimation(anim);
+		std::shared_ptr<GameObject> background = std::make_shared<GameObject>();
+		background->SetTexture(*texture);
+		
+		m_Window->AddGameObject(background);
+		m_Window->AddGameObject(player);
+		player->SetScale({ 5,5 });
 
 		while (isRunning)
 		{
@@ -65,7 +72,6 @@ namespace Ghost
 			}
 
 			Time::SetDeltaTime();
-			anim->UpdateFrame(false);
 			m_Window->WindowUpdate(NULL);
 
 			SDL_Delay(1000 / 60);

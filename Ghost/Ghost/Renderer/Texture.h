@@ -12,6 +12,7 @@ namespace Ghost
 		~Texture();
 		bool TryLoadTexture(const char* path, SDL_Renderer* render, SDL_Point destination);
 		void SetScreenRect(SDL_Rect screenRect);
+		void SetDestinationRect(SDL_Rect destRect);
 		SDL_Texture* GetTexture() { return m_Texture; }
 		SDL_Rect* GetDestinationRect() { return m_DestinationRect; }
 		SDL_Rect* GetScreenRect() { return m_SreenRect; }

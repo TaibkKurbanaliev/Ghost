@@ -70,30 +70,40 @@ namespace Ghost
 
 	void Window::WindowUpdate(Camera* camera)
 	{
-		if (m_Textures.empty())
+		if (m_GameObjects.empty())
 			return;
 
 		SDL_RenderClear(m_Render);
 
-		for (auto currentTexture = begin(m_Textures); currentTexture < end(m_Textures); ++currentTexture)
+		for (auto currentObject = begin(m_GameObjects); currentObject < end(m_GameObjects); ++currentObject)
 		{
-			if (camera != NULL)
-				SDL_RenderCopyEx(m_Render, (*currentTexture)->GetTexture(), camera->GetProperties(), (*currentTexture)->GetDestinationRect(), 0, NULL, SDL_FLIP_NONE);
-			else 
-				SDL_RenderCopyEx(m_Render, (*currentTexture)->GetTexture(), (*currentTexture)->GetScreenRect(), (*currentTexture)->GetDestinationRect(), 0, NULL, SDL_FLIP_NONE);
+			if ((*currentObject)->GetAnimation() != NULL)
+			{
+				auto objectTexture = (*currentObject)->GetAnimation()->GetTexture();
+				(*currentObject)->GetAnimation()->UpdateFrame(false);
+				SDL_RenderCopyEx(m_Render, (*objectTexture)->GetTexture(), (*objectTexture)->GetScreenRect(),
+					(*objectTexture)->GetDestinationRect(), (*currentObject)->GetRotation(), NULL, SDL_FLIP_NONE);
+			}
+			else if ((*currentObject)->GetTexture() != NULL)
+			{
+				auto objectTexture = (*currentObject)->GetTexture();
+				SDL_RenderCopyEx(m_Render, (*currentObject)->GetTexture()->GetTexture(), (*currentObject)->GetTexture()->GetScreenRect(),
+					(*currentObject)->GetTexture()->GetDestinationRect(), (*currentObject)->GetRotation(), NULL, SDL_FLIP_NONE);
+			}
+				
 		}
 
 		SDL_RenderPresent(m_Render);
 	}
 
-	void Window::AddTexture(std::shared_ptr<Texture>& texture)
+	void Window::AddGameObject(std::shared_ptr<GameObject>& gameObject)
 	{
-		if (&texture == NULL)
+		if (&gameObject == NULL)
 		{
-			GHOST_CORE_WARN("Texture value is NULL");
+			GHOST_CORE_WARN("GameObject value is NULL");
 			return;
 		}
 
-		m_Textures.emplace_back(texture);
+		m_GameObjects.emplace_back(gameObject);
 	}
 }

@@ -2,6 +2,7 @@
 
 #include "../MainIncludes.h"
 #include "../Core/Log.h"
+#include "../Scene/GameObject.h"
 #include "Texture.h"
 #include "Camera.h"
 
@@ -16,7 +17,7 @@ namespace Ghost
 		void Init();
 		void DeInit(int error);
 		void WindowUpdate(Camera* camera);
-		void AddTexture(std::shared_ptr<Texture>& texture);
+		void AddGameObject(std::shared_ptr<GameObject>& gameObject);
 		SDL_Renderer* const GetRender() { return m_Render; }
 		int GetWidth() { return m_Width; }
 		int GetHeight() { return m_Height; }
@@ -26,7 +27,7 @@ namespace Ghost
 		std::string m_Title = "GhostEngine";
 		int m_Width = 1920;
 		int m_Height = 1080;
-		std::vector<std::shared_ptr<Texture>> m_Textures;
+		std::vector<std::shared_ptr<GameObject>> m_GameObjects;
 	};
 }
 

@@ -9,6 +9,8 @@ namespace Ghost
 		m_FrameSize = frameSize;
 		m_StartPoint = startPoint;
 		m_NumberOfFrames = numberOfFrames;
+		SDL_Rect startPosition = { 0,0,frameSize.x,frameSize.y };
+		m_SpriteSheet->SetDestinationRect(startPosition);
 	}
 
 	void Animation::SetNextRowFrame()
