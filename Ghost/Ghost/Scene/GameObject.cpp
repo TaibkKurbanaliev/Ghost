@@ -4,6 +4,18 @@ namespace Ghost
 {
 	void GameObject::Move(SDL_Point destination)
 	{
+		if (m_BoxCollider.get() != NULL)
+		{
+			m_BoxCollider->Move(destination);
+
+			if (Physics::IsTouching(*m_BoxCollider.get()))
+			{
+				SDL_Point reversePoint = { -destination.x, -destination.y };
+				m_BoxCollider->Move(reversePoint);
+				return;
+			}
+		}
+		
 		m_Position.x += destination.x;
 		m_Position.y += destination.y;
 
@@ -50,6 +62,19 @@ namespace Ghost
 		m_Animation = std::make_shared<Animation>(*animation);
 	}
 
+	void GameObject::SetCollider(BoxCollider& collider)
+	{
+		if (&collider == NULL)
+		{
+			GHOST_CORE_WARN("Collider value is NULL");
+			return;
+		}
+
+		m_BoxCollider = std::make_shared<BoxCollider>(collider);
+
+		Physics::AddCollider(m_BoxCollider);
+	}
+
 	void GameObject::SetPosition(SDL_Point position)
 	{
 		m_Position = position;
@@ -75,6 +100,12 @@ namespace Ghost
 			SDL_Rect oldSize = *(*texture)->GetDestinationRect();
 			SDL_Rect newSize = { oldSize.x, oldSize.y, oldSize.w * (scale.x / m_Scale.x), oldSize.h * (scale.y / m_Scale.y) };
 			(*texture)->SetDestinationRect(newSize);
+		}
+		else if (m_Texture != NULL)
+		{
+			SDL_Rect oldSize = *m_Texture->GetDestinationRect();
+			SDL_Rect newSize = { oldSize.x, oldSize.y, oldSize.w * (scale.x / m_Scale.x), oldSize.h * (scale.y / m_Scale.y) };
+			m_Texture->SetDestinationRect(newSize);
 		}
 
 		m_Scale = scale;

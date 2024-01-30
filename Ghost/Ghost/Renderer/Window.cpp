@@ -37,7 +37,7 @@ namespace Ghost
 		if (imgInit & IMG_INIT_JPG) GHOST_CORE_INFO("Initialized PNG library"); else GHOST_CORE_ERROR("Couldn't init PNG library");
 		if (imgInit & IMG_INIT_PNG) GHOST_CORE_INFO("Initialized JPG library"); else GHOST_CORE_ERROR("Couldn't init JPG library");
 
-		m_Window = SDL_CreateWindow(m_Title.c_str(), 1000, 500, m_Width, m_Height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+		m_Window = SDL_CreateWindow(m_Title.c_str(), 500, 200, m_Width, m_Height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
 
 		if (m_Window == NULL)
 		{
