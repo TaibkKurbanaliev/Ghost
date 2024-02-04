@@ -28,23 +28,26 @@ namespace Ghost
 		texture2->TryLoadTexture("D:\\LightBandit.png", m_Window->GetRender(), {0,0});
 		texture3->TryLoadTexture("D:\\platform-long.png", m_Window->GetRender(), { 0,500 });
 
-
-		Animation* anim = new Animation(*texture2, { 48,48 }, { 0,48 }, 4);
+		Animation* anim = new Animation(*texture2, { 48,48 }, { 0,48 }, 7);
+		Animation* idle = new Animation(*texture2, { 48,48 }, { 0,0 }, 3);
+		Animator* playerAnimator = new Animator();
+		playerAnimator->AddAnimation("run", std::make_shared<Animation>(*anim));
 
 		std::shared_ptr<GameObject> player = std::make_shared<GameObject>();
-		player->SetAnimation(anim);
+		player->SetAnimator(playerAnimator);
 		std::shared_ptr<GameObject> background = std::make_shared<GameObject>();
 		background->SetTexture(*texture);
 		std::shared_ptr<GameObject> platform = std::make_shared<GameObject>();
 		platform->SetTexture(*texture3);
+		BoxCollider* playerCollider = new BoxCollider({ 0,0,48,46 });
+		player->SetCollider(*playerCollider);
 
 		player->SetScale({ 5,5 });
+		player->AddAnimation("idle", idle);
 		platform->SetScale({ 5,2 });
 
-		BoxCollider* playerCollider = new BoxCollider(*player->GetAnimation()->GetTexture()->get()->GetDestinationRect());
 		BoxCollider* platformCollider = new BoxCollider(*platform->GetTexture()->GetDestinationRect());
 
-		player->SetCollider(*playerCollider);
 		platform->SetCollider(*platformCollider);
 		
 		m_Window->AddGameObject(background);
@@ -53,44 +56,33 @@ namespace Ghost
 		
 		while (isRunning)
 		{
-			while (SDL_PollEvent(&ev))
+			Input::ReadInputEvents();
+
+			if (Input::GetQuit())
 			{
-				switch (ev.type)
-				{
-				case SDL_QUIT:
-					isRunning = false;
-					m_Window->DeInit(0);
-					break;
-				case SDL_KEYDOWN:
-					switch (ev.key.keysym.scancode)
-					{
-					case SDL_SCANCODE_LEFT:
-						Input::SetHorizontal(HORIZONTAL_AXIS_LEFT);
-						break;
-					case SDL_SCANCODE_RIGHT:
-						Input::SetHorizontal(HORIZONTAL_AXIS_RIGHT);
-						break;
-					case SDL_SCANCODE_UP:
-						Input::SetVertical(VERTICAL_AXIS_UP);
-						break;
-					case SDL_SCANCODE_DOWN:
-						Input::SetVertical(VERTICAL_AXIS_DOWN);
-						break;
-					}
-					break;
-				default:
-					Input::SetHorizontal(0);
-					Input::SetVertical(0);
-					break;
-				}
+				isRunning = false;
+				m_Window->DeInit(0);
 			}
+
+			GHOST_CORE_INFO(Input::GetKey(SDL_SCANCODE_SPACE));
 
 			if (Input::GetHorizontal() != 0 || Input::GetVertical() != 0)
 			{
 				player->Move({ Input::GetHorizontal(), Input::GetVertical() });
+				player->GetAnimator()->SetNextAnimation("run");
+				
+				if (Input::GetHorizontal() > 0)
+					player->IsFlip(true);
+				else if (Input::GetHorizontal() < 0)
+					player->IsFlip(false);
 			}
+			else 
+				player->GetAnimator()->SetNextAnimation("idle");
+
+
 
 			Time::SetDeltaTime();
+
 			m_Window->WindowUpdate(NULL);
 
 			SDL_Delay(1000 / 60);

@@ -51,6 +51,9 @@
     <ClCompile Include="Ghost\Physics\Physics.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Ghost\Renderer\Animator.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ghost\Renderer\Window.h">
@@ -93,6 +96,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Ghost\Physics\Physics.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost\Renderer\Animator.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

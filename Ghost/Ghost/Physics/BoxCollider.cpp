@@ -56,4 +56,8 @@ namespace Ghost
     {
         m_Properties = { position.x, position.y, m_Properties.w, m_Properties.h };
     }
+    void BoxCollider::Resize(SDL_Point newSize)
+    {
+        m_Properties = { m_Properties.x, m_Properties.y, newSize.x, newSize.y };
+    }
 }

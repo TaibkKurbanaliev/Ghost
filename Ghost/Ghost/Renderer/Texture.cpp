@@ -40,4 +40,17 @@ namespace Ghost
 	{
 		*m_DestinationRect = destRect;
 	}
+
+	SDL_RendererFlip Texture::GetFlip()
+	{
+		return m_IsFlip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+	}
+
+	void Texture::SetFlip(bool isFlip)
+	{
+		if (m_IsFlip == isFlip)
+			return;
+
+		m_IsFlip = isFlip;
+	}
 }

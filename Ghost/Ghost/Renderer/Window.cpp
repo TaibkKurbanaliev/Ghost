@@ -77,18 +77,21 @@ namespace Ghost
 
 		for (auto currentObject = begin(m_GameObjects); currentObject < end(m_GameObjects); ++currentObject)
 		{
-			if ((*currentObject)->GetAnimation() != NULL)
+			if ((*currentObject)->GetAnimator() != NULL)
 			{
-				auto objectTexture = (*currentObject)->GetAnimation()->GetTexture();
-				(*currentObject)->GetAnimation()->UpdateFrame(false);
-				SDL_RenderCopyEx(m_Render, (*objectTexture)->GetTexture(), (*objectTexture)->GetScreenRect(),
-					(*objectTexture)->GetDestinationRect(), (*currentObject)->GetRotation(), NULL, SDL_FLIP_NONE);
+				auto objectTexture = (*currentObject)->GetAnimator()->GetCurrentAnimation()->GetTexture();
+
+				(*currentObject)->GetAnimator()->GetCurrentAnimation()->UpdateFrame(false);
+
+				SDL_RenderCopyEx(m_Render, objectTexture->GetTexture(), objectTexture->GetScreenRect(),
+					objectTexture->GetDestinationRect(), (*currentObject)->GetRotation(), NULL, objectTexture->GetFlip());
 			}
 			else if ((*currentObject)->GetTexture() != NULL)
 			{
 				auto objectTexture = (*currentObject)->GetTexture();
-				SDL_RenderCopyEx(m_Render, (*currentObject)->GetTexture()->GetTexture(), (*currentObject)->GetTexture()->GetScreenRect(),
-					(*currentObject)->GetTexture()->GetDestinationRect(), (*currentObject)->GetRotation(), NULL, SDL_FLIP_NONE);
+
+				SDL_RenderCopyEx(m_Render, objectTexture->GetTexture(), objectTexture->GetScreenRect(),
+					objectTexture->GetDestinationRect(), (*currentObject)->GetRotation(), NULL, objectTexture->GetFlip());
 			}
 				
 		}

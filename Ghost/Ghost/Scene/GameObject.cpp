@@ -19,7 +19,7 @@ namespace Ghost
 		m_Position.x += destination.x;
 		m_Position.y += destination.y;
 
-		if (m_Texture != NULL && m_Animation == NULL)
+		if (m_Texture != NULL && m_Animator == NULL)
 		{
 			SDL_Rect oldTextureDest = *m_Texture->GetDestinationRect();
 			SDL_Rect newTextureDest = { m_Position.x, m_Position.y, oldTextureDest.w, oldTextureDest.h };
@@ -27,9 +27,9 @@ namespace Ghost
 		}
 		else
 		{
-			SDL_Rect oldTextureDest = *(*m_Animation->GetTexture())->GetDestinationRect();
+			SDL_Rect oldTextureDest = *m_Animator->GetCurrentAnimation()->GetTexture()->GetDestinationRect();
 			SDL_Rect newTextureDest = { m_Position.x, m_Position.y, oldTextureDest.w, oldTextureDest.h };
-			(*m_Animation->GetTexture())->SetDestinationRect(newTextureDest);
+			m_Animator->GetCurrentAnimation()->GetTexture()->SetDestinationRect(newTextureDest);
 		}
 	}
 
@@ -51,7 +51,18 @@ namespace Ghost
 		m_Texture = std::make_shared<Texture>(texture);
 	}
 
-	void GameObject::SetAnimation(Animation* animation)
+	void GameObject::SetAnimator(Animator* animator)
+	{
+		if (animator == NULL)
+		{
+			GHOST_CORE_WARN("Animator is NULL");
+			return;
+		}
+
+		m_Animator = std::make_shared<Animator>(*animator);
+	}
+
+	void GameObject::AddAnimation(std::string title, Animation* animation)
 	{
 		if (&animation == NULL)
 		{
@@ -59,7 +70,7 @@ namespace Ghost
 			return;
 		}
 
-		m_Animation = std::make_shared<Animation>(*animation);
+		m_Animator->AddAnimation(title,std::make_shared<Animation>(*animation));
 	}
 
 	void GameObject::SetCollider(BoxCollider& collider)
@@ -73,6 +84,14 @@ namespace Ghost
 		m_BoxCollider = std::make_shared<BoxCollider>(collider);
 
 		Physics::AddCollider(m_BoxCollider);
+	}
+
+	void GameObject::IsFlip(bool isFlip)
+	{
+		if (m_Texture != NULL && m_Animator == NULL)
+			m_Texture->SetFlip(isFlip);
+		else
+			m_Animator->FlipAllAnimations(isFlip);
 	}
 
 	void GameObject::SetPosition(SDL_Point position)
@@ -94,12 +113,18 @@ namespace Ghost
 			return;
 		}
 
-		if (m_Animation != NULL)
+		if (m_BoxCollider != NULL)
 		{
-			auto texture = m_Animation->GetTexture();
-			SDL_Rect oldSize = *(*texture)->GetDestinationRect();
+			SDL_Rect oldSize = m_BoxCollider->GetProperties();
+			m_BoxCollider->Resize({ (int)(oldSize.w * scale.x), (int)(oldSize.h * scale.y) });
+		}
+
+		if (m_Animator != NULL)
+		{
+			auto texture = m_Animator->GetCurrentAnimation()->GetTexture();
+			SDL_Rect oldSize = *texture->GetDestinationRect();
 			SDL_Rect newSize = { oldSize.x, oldSize.y, oldSize.w * (scale.x / m_Scale.x), oldSize.h * (scale.y / m_Scale.y) };
-			(*texture)->SetDestinationRect(newSize);
+			texture->SetDestinationRect(newSize);
 		}
 		else if (m_Texture != NULL)
 		{

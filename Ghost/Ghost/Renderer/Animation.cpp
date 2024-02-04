@@ -11,6 +11,8 @@ namespace Ghost
 		m_NumberOfFrames = numberOfFrames;
 		SDL_Rect startPosition = { 0,0,frameSize.x,frameSize.y };
 		m_SpriteSheet->SetDestinationRect(startPosition);
+		m_CurrentFrame = startPoint;
+		SetNextRowFrame();
 	}
 
 	void Animation::SetNextRowFrame()
@@ -20,7 +22,9 @@ namespace Ghost
 		if (m_CurrentFrame.x >= rowEnd.x)
 			m_CurrentFrame = m_StartPoint;
 		else
+		{
 			m_CurrentFrame.x += m_FrameSize.x;
+		}	
 
 		m_SpriteSheet->SetScreenRect({m_CurrentFrame.x, m_CurrentFrame.y, m_FrameSize.x, m_FrameSize.y});
 	}
@@ -37,6 +41,11 @@ namespace Ghost
 		m_SpriteSheet->SetScreenRect({ m_CurrentFrame.x, m_CurrentFrame.y, m_FrameSize.x, m_FrameSize.y });
 	}
 
+	void Animation::SetStartFrame()
+	{
+		m_CurrentFrame = m_StartPoint;
+	}
+
 	void Animation::UpdateFrame(bool isReverse)
 	{
 		m_CurentFrameTime += Time::GetDeltaTime();
@@ -45,6 +54,7 @@ namespace Ghost
 			return;
 
 		m_CurentFrameTime = 0;
+
 		isReverse ? SetPreviousRowFrame() : SetNextRowFrame();
 	}
 }

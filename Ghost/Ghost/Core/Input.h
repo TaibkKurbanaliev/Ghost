@@ -7,11 +7,19 @@ namespace Ghost
 	class Input
 	{
 	public:
+		static void ReadInputEvents();
 		static void SetHorizontal(int value);
 		static void SetVertical(int value);
 		static int GetHorizontal() { return s_Horizontal; }
 		static int GetVertical() { return s_Vertical; }
+		static bool GetKey(SDL_Scancode key);
+		static bool GetKeyDown(SDL_Scancode key);
+		static bool GetKeyUp(SDL_Scancode key);
+		static bool GetQuit() { return s_Quit; }
 	private:
+		static const Uint8* KEYBOARD_STATES;
+		static SDL_Event s_Event; 
+		static bool s_Quit;
 		static int s_Horizontal;
 		static int s_Vertical;
 	};

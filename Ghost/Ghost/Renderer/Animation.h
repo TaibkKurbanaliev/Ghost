@@ -11,8 +11,9 @@ namespace Ghost
 		Animation(Texture& spriteSheet, SDL_Point frameSize, SDL_Point startPoint, int numberOfFrames);
 		void SetNextRowFrame();
 		void SetPreviousRowFrame();
+		void SetStartFrame();
 		void UpdateFrame(bool isReverse);
-		std::shared_ptr<Texture>* GetTexture() { return &m_SpriteSheet; }
+		std::shared_ptr<Texture>& GetTexture() { return m_SpriteSheet; }
 	private:
 		std::shared_ptr<Texture> m_SpriteSheet;
 		SDL_Point m_FrameSize;

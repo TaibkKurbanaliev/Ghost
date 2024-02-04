@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ghost\Renderer\Animator.cpp" />
     <ClCompile Include="Ghost\Physics\BoxCollider.cpp" />
     <ClCompile Include="Ghost\Scene\GameObject.cpp" />
     <ClCompile Include="Ghost\Renderer\Animation.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="Ghost\Physics\Physics.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ghost\Renderer\Animator.h" />
     <ClInclude Include="Ghost\Physics\BoxCollider.h" />
     <ClInclude Include="Ghost\Physics\Collider.h" />
     <ClInclude Include="Ghost\Scene\GameObject.h" />
