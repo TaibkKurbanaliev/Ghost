@@ -113,6 +113,8 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Engine\Ghost\Vendor\include</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,12 +141,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Ghost\Renderer\Animator.cpp" />
     <ClCompile Include="Ghost\Physics\BoxCollider.cpp" />
     <ClCompile Include="Ghost\Scene\GameObject.cpp" />
     <ClCompile Include="Ghost\Renderer\Animation.cpp" />
     <ClCompile Include="Ghost\Renderer\Camera.cpp" />
-    <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Ghost\Core\Application.cpp" />
     <ClCompile Include="Ghost\Renderer\Window.cpp" />
     <ClCompile Include="Ghost\Core\Log.cpp" />
@@ -152,6 +154,7 @@
     <ClCompile Include="Ghost\Core\Input.cpp" />
     <ClCompile Include="Ghost\Core\Time.cpp" />
     <ClCompile Include="Ghost\Physics\Physics.cpp" />
+    <ClCompile Include="Game\Entities\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ghost\Renderer\Animator.h" />
@@ -169,6 +172,7 @@
     <ClInclude Include="Ghost\Core\Input.h" />
     <ClInclude Include="Ghost\Core\Time.h" />
     <ClInclude Include="Ghost\Physics\Physics.h" />
+    <ClInclude Include="Game\Entities\Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

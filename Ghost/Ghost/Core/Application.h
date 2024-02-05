@@ -17,6 +17,8 @@ namespace Ghost
 		/*void Init();
 		void DeInit();*/
 		void Run();
+		void AddGameObject(std::shared_ptr<GameObject>& gameObject);
+		Texture* LoadTexture(const char* path, SDL_Point destination);
 	private:
 		std::unique_ptr<Window> m_Window;
 	};

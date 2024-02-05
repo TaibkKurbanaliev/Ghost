@@ -2,6 +2,9 @@
 
 namespace Ghost
 {
+	void GameObject::Update()
+	{
+	}
 	void GameObject::Move(SDL_Point destination)
 	{
 		if (m_BoxCollider.get() != NULL)

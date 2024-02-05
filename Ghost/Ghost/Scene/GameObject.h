@@ -10,6 +10,7 @@ namespace Ghost
 	class GameObject
 	{
 	public:
+		void virtual Update();
 		void Move(SDL_Point destination);
 		void Rotate(int angle);
 		void SetTexture(Texture& texture);
