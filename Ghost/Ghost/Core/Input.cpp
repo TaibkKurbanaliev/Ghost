@@ -6,6 +6,8 @@ namespace Ghost
 	int Ghost::Input::s_Vertical;
 	bool Ghost::Input::s_Quit = false;
 	const Uint8* Ghost::Input::KEYBOARD_STATES = SDL_GetKeyboardState(NULL);
+	bool* Ghost::Input::PREVIOUS_DOWN_STATES = new bool[SDL_NUM_SCANCODES] {false};
+	bool* Ghost::Input::PREVIOUS_UP_STATES = new bool[SDL_NUM_SCANCODES] {false};
 	SDL_Event Ghost::Input::s_Event;
 
 	void Input::ReadInputEvents()
@@ -63,14 +65,32 @@ namespace Ghost
 
 	bool Input::GetKeyDown(SDL_Scancode key)
 	{
-		return true;
+		bool currentState = KEYBOARD_STATES[key];
+
+		if (currentState && !PREVIOUS_DOWN_STATES[key])
+		{
+			PREVIOUS_DOWN_STATES[key] = true;
+			return true;
+		}
+
+		PREVIOUS_DOWN_STATES[key] = currentState; // Update the previous state
+
+		return false;
 	}
 
 	bool Input::GetKeyUp(SDL_Scancode key)
 	{
+		bool currentState = KEYBOARD_STATES[key];
+
+		if (!currentState && PREVIOUS_UP_STATES[key])
+		{
+			PREVIOUS_UP_STATES[key] = false;
+			return true;
+		}
+
+		PREVIOUS_UP_STATES[key] = currentState;
+
 		return false;
 	}
-
-
 }
 

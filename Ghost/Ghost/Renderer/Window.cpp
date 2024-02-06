@@ -3,6 +3,9 @@
 
 namespace Ghost
 {
+	static int Gm_Width = 1280;
+	static int m_Height = 720;
+
 	Window::Window()
 	{
 		Init();

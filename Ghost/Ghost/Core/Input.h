@@ -18,6 +18,8 @@ namespace Ghost
 		static bool GetQuit() { return s_Quit; }
 	private:
 		static const Uint8* KEYBOARD_STATES;
+		static bool* PREVIOUS_DOWN_STATES;
+		static bool* PREVIOUS_UP_STATES;
 		static SDL_Event s_Event; 
 		static bool s_Quit;
 		static int s_Horizontal;

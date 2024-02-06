@@ -18,7 +18,6 @@ namespace Ghost
 		void DeInit(int error);
 		void WindowUpdate(Camera* camera);
 		void AddGameObject(std::shared_ptr<GameObject>& gameObject);
-		Texture* LoadTexture();
 		SDL_Renderer* const GetRender() { return m_Render; }
 		int GetWidth() { return m_Width; }
 		int GetHeight() { return m_Height; }

@@ -50,7 +50,6 @@ namespace Ghost
 			return;
 		}
 
-
 		m_Texture = std::make_shared<Texture>(texture);
 	}
 
@@ -100,6 +99,24 @@ namespace Ghost
 	void GameObject::SetPosition(SDL_Point position)
 	{
 		m_Position = position;
+
+		if (m_BoxCollider.get() != NULL)
+		{
+			m_BoxCollider->SetPosition(m_Position);
+		}
+
+		if (m_Texture != NULL && m_Animator == NULL)
+		{
+			SDL_Rect oldTextureDest = *m_Texture->GetDestinationRect();
+			SDL_Rect newTextureDest = { m_Position.x, m_Position.y, oldTextureDest.w, oldTextureDest.h };
+			m_Texture->SetDestinationRect(newTextureDest);
+		}
+		else
+		{
+			SDL_Rect oldTextureDest = *m_Animator->GetCurrentAnimation()->GetTexture()->GetDestinationRect();
+			SDL_Rect newTextureDest = { m_Position.x, m_Position.y, oldTextureDest.w, oldTextureDest.h };
+			m_Animator->GetCurrentAnimation()->GetTexture()->SetDestinationRect(newTextureDest);
+		}
 	}
 
 	void GameObject::SetRotation(int angle)
