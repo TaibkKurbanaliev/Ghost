@@ -60,4 +60,9 @@ namespace Ghost
     {
         m_Properties = { m_Properties.x, m_Properties.y, newSize.x, newSize.y };
     }
+    void BoxCollider::SetObjectName(std::string& name)
+    {
+        if (m_ObjectName.empty())
+            m_ObjectName = name;
+    }
 }

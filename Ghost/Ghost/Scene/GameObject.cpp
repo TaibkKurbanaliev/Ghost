@@ -5,33 +5,46 @@ namespace Ghost
 	void GameObject::Update()
 	{
 	}
-	void GameObject::Move(SDL_Point destination)
+	void GameObject::Move(SDL_FPoint destination)
 	{
 		if (m_BoxCollider.get() != NULL)
 		{
-			m_BoxCollider->Move(destination);
+			m_Position.x += destination.x;
 
-			if (Physics::IsTouching(*m_BoxCollider.get()))
+			std::string collisionObject;
+			m_BoxCollider->SetPosition({ (int)m_Position.x, (int)m_Position.y });
+
+			if (Physics::IsTouching(*m_BoxCollider.get(), collisionObject))
 			{
-				SDL_Point reversePoint = { -destination.x, -destination.y };
-				m_BoxCollider->Move(reversePoint);
-				return;
+				m_Position.x -= destination.x;
+				m_BoxCollider->SetPosition({ (int)m_Position.x, (int)m_Position.y });
+			}
+
+			m_Position.y += destination.y;
+			m_BoxCollider->SetPosition({ (int)m_Position.x, (int)m_Position.y });
+
+			if (Physics::IsTouching(*m_BoxCollider.get(), collisionObject))
+			{
+				m_Position.y -= destination.y;
+				m_BoxCollider->SetPosition({ (int)m_Position.x, (int)m_Position.y });
 			}
 		}
-		
-		m_Position.x += destination.x;
-		m_Position.y += destination.y;
+		else
+		{
+			m_Position.x += destination.x;
+			m_Position.y += destination.y;
+		}
 
 		if (m_Texture != NULL && m_Animator == NULL)
 		{
 			SDL_Rect oldTextureDest = *m_Texture->GetDestinationRect();
-			SDL_Rect newTextureDest = { m_Position.x, m_Position.y, oldTextureDest.w, oldTextureDest.h };
+			SDL_Rect newTextureDest = { (int)m_Position.x, (int)m_Position.y, oldTextureDest.w, oldTextureDest.h };
 			m_Texture->SetDestinationRect(newTextureDest);
 		}
 		else
 		{
 			SDL_Rect oldTextureDest = *m_Animator->GetCurrentAnimation()->GetTexture()->GetDestinationRect();
-			SDL_Rect newTextureDest = { m_Position.x, m_Position.y, oldTextureDest.w, oldTextureDest.h };
+			SDL_Rect newTextureDest = { (int)m_Position.x, (int)m_Position.y, oldTextureDest.w, oldTextureDest.h };
 			m_Animator->GetCurrentAnimation()->GetTexture()->SetDestinationRect(newTextureDest);
 		}
 	}
@@ -84,6 +97,7 @@ namespace Ghost
 		}
 
 		m_BoxCollider = std::make_shared<BoxCollider>(collider);
+		m_BoxCollider->SetObjectName(m_ObjectType);
 
 		Physics::AddCollider(m_BoxCollider);
 	}
@@ -96,25 +110,25 @@ namespace Ghost
 			m_Animator->FlipAllAnimations(isFlip);
 	}
 
-	void GameObject::SetPosition(SDL_Point position)
+	void GameObject::SetPosition(SDL_FPoint position)
 	{
 		m_Position = position;
 
 		if (m_BoxCollider.get() != NULL)
 		{
-			m_BoxCollider->SetPosition(m_Position);
+			m_BoxCollider->SetPosition({ (int)m_Position.x, (int)m_Position.y });
 		}
 
 		if (m_Texture != NULL && m_Animator == NULL)
 		{
 			SDL_Rect oldTextureDest = *m_Texture->GetDestinationRect();
-			SDL_Rect newTextureDest = { m_Position.x, m_Position.y, oldTextureDest.w, oldTextureDest.h };
+			SDL_Rect newTextureDest = { (int)m_Position.x, (int)m_Position.y, oldTextureDest.w, oldTextureDest.h };
 			m_Texture->SetDestinationRect(newTextureDest);
 		}
 		else
 		{
 			SDL_Rect oldTextureDest = *m_Animator->GetCurrentAnimation()->GetTexture()->GetDestinationRect();
-			SDL_Rect newTextureDest = { m_Position.x, m_Position.y, oldTextureDest.w, oldTextureDest.h };
+			SDL_Rect newTextureDest = { (int)m_Position.x, (int)m_Position.y, oldTextureDest.w, oldTextureDest.h };
 			m_Animator->GetCurrentAnimation()->GetTexture()->SetDestinationRect(newTextureDest);
 		}
 	}
