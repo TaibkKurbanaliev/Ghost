@@ -18,8 +18,10 @@ namespace Ghost
 		void DeInit();*/
 		void Run();
 		void AddGameObject(std::shared_ptr<GameObject>& gameObject);
+		void ChangeFPS(int fps);
 		Texture* LoadTexture(const char* path, SDL_Point destination);
 	private:
 		std::unique_ptr<Window> m_Window;
+		int m_FPS = 60;
 	};
 }

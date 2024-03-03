@@ -80,6 +80,12 @@ namespace Ghost
 
 		for (auto currentObject = begin(m_GameObjects); currentObject < end(m_GameObjects); ++currentObject)
 		{
+			if ((*currentObject)->isStart)
+			{
+				(*currentObject)->Start();
+				(*currentObject)->isStart = !(*currentObject)->isStart;
+			}
+
 			(*currentObject)->Update();
 
 			if ((*currentObject)->GetAnimator() != NULL)

@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\CPP\SDL2_image-2.8.1\include;C:\CPP\SDL2_ttf-2.20.2\include;C:\CPP\SDL2-2.28.5\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\CPP\SDL2_image-2.8.1\lib\x64;C:\CPP\SDL2_ttf-2.20.2\lib\x64;C:\CPP\SDL2-2.28.5\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\CPP\SDL2_image-2.8.1\include;C:\CPP\SDL2-2.28.5\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\CPP\SDL2_image-2.8.1\lib\x64;C:\CPP\SDL2-2.28.5\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\CPP\SDL2_image-2.8.1\include;C:\CPP\SDL2_ttf-2.20.2\include;C:\CPP\SDL2-2.28.5\include;$(IncludePath)</IncludePath>
@@ -112,14 +112,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Engine\Ghost\Vendor\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SDL2\SDL2_image-2.8.2\include;$(SolutionDir)SDL2\SDL2-2.30.0\include;C:\Engine\Ghost\Vendor\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <DisableSpecificWarnings>4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)SDL2\SDL2-2.30.0\lib\x64;$(SolutionDir)SDL2\SDL2_image-2.8.2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -141,7 +143,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Ghost\Renderer\Animator.cpp" />
     <ClCompile Include="Ghost\Physics\BoxCollider.cpp" />
     <ClCompile Include="Ghost\Scene\GameObject.cpp" />
@@ -154,8 +155,11 @@
     <ClCompile Include="Ghost\Core\Input.cpp" />
     <ClCompile Include="Ghost\Core\Time.cpp" />
     <ClCompile Include="Ghost\Physics\Physics.cpp" />
-    <ClCompile Include="Game\Entities\Player.cpp" />
-    <ClCompile Include="Game\Entities\Platform.cpp" />
+    <ClCompile Include="Project\GameObjects\Platform.cpp" />
+    <ClCompile Include="Project\GameObjects\Player.cpp" />
+    <ClCompile Include="Project\Source.cpp" />
+    <ClCompile Include="Project\GameObjects\SortedObject.cpp" />
+    <ClCompile Include="Project\GameObjects\Sorter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ghost\Renderer\Animator.h" />
@@ -175,6 +179,10 @@
     <ClInclude Include="Ghost\Physics\Physics.h" />
     <ClInclude Include="Game\Entities\Player.h" />
     <ClInclude Include="Game\Entities\Platform.h" />
+    <ClInclude Include="Project\GameObjects\Platform.h" />
+    <ClInclude Include="Project\GameObjects\Player.h" />
+    <ClInclude Include="Project\GameObjects\SortedObject.h" />
+    <ClInclude Include="Project\GameObjects\Sorter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

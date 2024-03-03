@@ -5,6 +5,11 @@ namespace Ghost
 	void GameObject::Update()
 	{
 	}
+
+	void GameObject::Start()
+	{
+	}
+
 	void GameObject::Move(SDL_FPoint destination)
 	{
 		if (m_BoxCollider.get() != NULL)
@@ -90,12 +95,6 @@ namespace Ghost
 
 	void GameObject::SetCollider(BoxCollider& collider)
 	{
-		if (&collider == NULL)
-		{
-			GHOST_CORE_WARN("Collider value is NULL");
-			return;
-		}
-
 		m_BoxCollider = std::make_shared<BoxCollider>(collider);
 		m_BoxCollider->SetObjectName(m_ObjectType);
 
@@ -125,7 +124,7 @@ namespace Ghost
 			SDL_Rect newTextureDest = { (int)m_Position.x, (int)m_Position.y, oldTextureDest.w, oldTextureDest.h };
 			m_Texture->SetDestinationRect(newTextureDest);
 		}
-		else
+		else if(m_Animator != NULL)
 		{
 			SDL_Rect oldTextureDest = *m_Animator->GetCurrentAnimation()->GetTexture()->GetDestinationRect();
 			SDL_Rect newTextureDest = { (int)m_Position.x, (int)m_Position.y, oldTextureDest.w, oldTextureDest.h };
@@ -133,7 +132,7 @@ namespace Ghost
 		}
 	}
 
-	void GameObject::SetRotation(int angle)
+	void GameObject::SetRotation(float angle)
 	{
 		m_Rotation = angle;
 		ClampRotation();
@@ -173,9 +172,9 @@ namespace Ghost
 	void GameObject::ClampRotation()
 	{
 		if (m_Rotation >= 360 || m_Rotation <= -360)
-			m_Rotation %= 360;
+			m_Rotation = ((int)m_Rotation) % 360;
 
-		if (m_Rotation < 0)
-			m_Rotation = 360 - SDL_abs(m_Rotation);
+		/*if (m_Rotation < 0)
+			m_Rotation = 360 - SDL_abs(m_Rotation);*/
 	}
 }
